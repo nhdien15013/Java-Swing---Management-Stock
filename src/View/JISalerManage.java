@@ -5,13 +5,20 @@
  */
 package View;
 
+import AppFunction.ExFunction;
 import AppFunction.SalerFunction;
+import AppFunction.UserLog;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,18 +27,28 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JISalerManage extends javax.swing.JInternalFrame {
     public DefaultTableModel tableModel = new DefaultTableModel();
+    public AppFunction.ExFunction exFunc = new ExFunction();
     public AppFunction.SalerFunction salerFunc = new SalerFunction();
+    
     /**
      * Creates new form JISalerManage
      */
     public JISalerManage() {
-        
+        initComponents();
         this.setResizable(true);
         this.setMinimumSize(new Dimension(855,555));
         this.setSize(getMaxWidth(), getMaxHeight());
-        initComponents();
+        //Create Bill
         salerFunc.viewItemToTable(jTable_Items);
-        salerFunc.getDataToCombobox(cmbCategories, "Categories");
+        salerFunc.setDataToCombobox(cmbCategories, "Categories",0);
+        salerFunc.setDataToCombobox(cmbCust, "Customers",0);
+        txtToday.setText(exFunc.getToday("dd/MM/yyyy"));
+        txtBill_Id.setText(String.valueOf(salerFunc.getIdentityId("Bills")));
+        txtUsername.setText(View.JIFrameUserLogin.getUserLog().getUserid()+" "+View.JIFrameUserLogin.getUserLog().getUsername());
+        //Customer
+        salerFunc.viewCust(jTable_Cust);
+        //Bill List
+        salerFunc.viewBillList(jTable_BillList);
         
     }
     public int getMaxWidth() {
@@ -51,6 +68,13 @@ public class JISalerManage extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialogViewItemsBills = new javax.swing.JDialog();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTableViewItemsBills = new javax.swing.JTable();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txtTotalPrice_ViewItemBills = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -62,22 +86,23 @@ public class JISalerManage extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbCust = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        lbTotalPrice = new javax.swing.JLabel();
-        jButton12 = new javax.swing.JButton();
+        txtBill_Id = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JLabel();
+        txtToday = new javax.swing.JLabel();
+        txtTotalPrice = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Items = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        txtItemId_Name = new javax.swing.JTextField();
+        txtItemName = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         cmbCategories = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
+        txtItemId = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -87,31 +112,87 @@ public class JISalerManage extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        txtBillId_Bills = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jTable_BillList = new javax.swing.JTable();
+        jDateFrom = new com.toedter.calendar.JDateChooser();
+        jDateTo = new com.toedter.calendar.JDateChooser();
+        txtSalerId_Bills = new javax.swing.JTextField();
+        txtCustId_Bills = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtCust_Id = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jTextField6 = new javax.swing.JTextField();
+        txtCust_Name = new javax.swing.JTextField();
+        cmbCust_Gender = new javax.swing.JComboBox<>();
+        txtCust_Tel = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtCust_Adress = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        jTable_Cust = new javax.swing.JTable();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+
+        jTableViewItemsBills.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+            }
+        ));
+        jScrollPane6.setViewportView(jTableViewItemsBills);
+
+        jButton12.setText("Cancel Selected Items");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        jButton13.setText("Cancel All");
+
+        jLabel7.setText("Total Price:");
+
+        txtTotalPrice_ViewItemBills.setText("$");
+
+        javax.swing.GroupLayout jDialogViewItemsBillsLayout = new javax.swing.GroupLayout(jDialogViewItemsBills.getContentPane());
+        jDialogViewItemsBills.getContentPane().setLayout(jDialogViewItemsBillsLayout);
+        jDialogViewItemsBillsLayout.setHorizontalGroup(
+            jDialogViewItemsBillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6)
+            .addGroup(jDialogViewItemsBillsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 384, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTotalPrice_ViewItemBills, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jDialogViewItemsBillsLayout.setVerticalGroup(
+            jDialogViewItemsBillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogViewItemsBillsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialogViewItemsBillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtTotalPrice_ViewItemBills, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jDialogViewItemsBillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                        .addComponent(jLabel7))
+                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE))
+        );
 
         setTitle("Saler");
         setToolTipText("");
@@ -132,6 +213,11 @@ public class JISalerManage extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable_Bill);
 
         jButton2.setText("Del Item");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Bill ID:");
 
@@ -143,21 +229,24 @@ public class JISalerManage extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Customer:");
 
-        jComboBox1.setEditable(true);
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer 1", "Customer 2" }));
+        cmbCust.setEditable(true);
+        cmbCust.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
         jButton4.setText("Submit");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setEditable(false);
-        jTextField2.setText("0");
+        txtBill_Id.setEditable(false);
+        txtBill_Id.setText("0");
 
-        jLabel7.setText("Username");
+        txtUsername.setText("Username");
 
-        jLabel8.setText("00/00/0000");
+        txtToday.setText("00/00/0000");
 
-        lbTotalPrice.setText("0 VND");
-
-        jButton12.setText("Cancel");
+        txtTotalPrice.setText("$0");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -176,20 +265,19 @@ public class JISalerManage extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbTotalPrice)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton12))
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(cmbCust, 0, 240, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTotalPrice)
+                            .addComponent(txtUsername)
+                            .addComponent(txtToday)
+                            .addComponent(txtBill_Id, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -198,30 +286,29 @@ public class JISalerManage extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBill_Id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbCust, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel7))
+                    .addComponent(txtUsername))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel8))
+                    .addComponent(txtToday))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(lbTotalPrice))
+                    .addComponent(txtTotalPrice))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton12))
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Items"));
@@ -251,39 +338,48 @@ public class JISalerManage extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Item ID/ Item Name:");
+        jLabel1.setText(" Item Name:");
 
         cmbCategories.setEditable(true);
+        cmbCategories.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
 
         jLabel22.setText("Category:");
+
+        jLabel9.setText("Item ID:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
+                    .addComponent(jLabel22)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cmbCategories, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtItemId_Name, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtItemId, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbCategories, javax.swing.GroupLayout.Alignment.LEADING, 0, 160, Short.MAX_VALUE)
+                            .addComponent(txtItemName, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
-                    .addComponent(jLabel22))
+                    .addComponent(jLabel9))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(106, 106, 106)
+                .addGap(60, 60, 60)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtItemId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtItemId_Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtItemName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -310,7 +406,7 @@ public class JISalerManage extends javax.swing.JInternalFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Produce Bill", jPanel2);
+        jTabbedPane1.addTab("Create Bill", jPanel2);
 
         jLabel10.setText("Bill ID:");
 
@@ -319,37 +415,52 @@ public class JISalerManage extends javax.swing.JInternalFrame {
         jLabel12.setText("Customer:");
 
         jButton5.setText("Search");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("From:");
 
         jLabel14.setText("To:");
 
         jButton6.setText("View Items");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Cancel");
 
-        jLabel15.setText("Username");
+        jScrollPane3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane3MouseClicked(evt);
+            }
+        });
 
-        jLabel16.setText("Customer name");
-
-        jComboBox2.setEditable(true);
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01/01/2016" }));
-
-        jComboBox3.setEditable(true);
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01/02/2016" }));
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_BillList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jTable_BillList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_BillListMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTable_BillList);
+
+        jDateFrom.setDateFormatString("yyyy-MM-dd");
+
+        jDateTo.setDateFormatString("yyyy-MM-dd");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -362,12 +473,12 @@ public class JISalerManage extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11)
                     .addComponent(jLabel12))
                 .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel15)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtBillId_Bills, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                    .addComponent(txtSalerId_Bills)
+                    .addComponent(txtCustId_Bills))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -378,10 +489,10 @@ public class JISalerManage extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jDateFrom, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(jDateTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(328, Short.MAX_VALUE))
             .addComponent(jScrollPane3)
         );
@@ -389,26 +500,29 @@ public class JISalerManage extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(jLabel13)
+                        .addComponent(txtBillId_Bills, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
+                    .addComponent(txtSalerId_Bills, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
-                    .addComponent(jLabel15)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7)
-                    .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel12)
+                        .addComponent(txtCustId_Bills, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton5)
+                        .addComponent(jButton6)
+                        .addComponent(jButton7)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Bills", jPanel1);
@@ -423,32 +537,52 @@ public class JISalerManage extends javax.swing.JInternalFrame {
 
         jLabel21.setText("Adress:");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+        cmbCust_Gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Male", "Female" }));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane4.setViewportView(jTextArea1);
+        txtCust_Adress.setColumns(20);
+        txtCust_Adress.setRows(5);
+        jScrollPane4.setViewportView(txtCust_Adress);
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_Cust.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ));
-        jScrollPane5.setViewportView(jTable4);
+        jTable_Cust.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_CustMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(jTable_Cust);
 
         jButton8.setText("Search");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Add new");
 
         jButton10.setText("Edit");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setText("Clear");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -462,7 +596,7 @@ public class JISalerManage extends javax.swing.JInternalFrame {
                     .addComponent(jLabel19))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbCust_Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jButton8)
@@ -474,15 +608,15 @@ public class JISalerManage extends javax.swing.JInternalFrame {
                             .addComponent(jButton11))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                                .addComponent(jTextField5))
+                                .addComponent(txtCust_Id, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                                .addComponent(txtCust_Name))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel21)
                                 .addComponent(jLabel20))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCust_Tel, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
@@ -494,19 +628,19 @@ public class JISalerManage extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jLabel20)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCust_Id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCust_Tel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel18)
                             .addComponent(jLabel21)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCust_Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel19)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cmbCust_Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -536,22 +670,216 @@ public class JISalerManage extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-       
+        String _mycondition = "";
+       if(txtItemId.getText().isEmpty()&&txtItemName.getText().isEmpty()&&cmbCategories.getSelectedItem().toString() == "All"){
+           _mycondition = "";
+       }else{
+            _mycondition = " WHERE";
+       }
+        if(!txtItemId.getText().isEmpty()){
+            _mycondition += " item_Id = "+txtItemId.getText();
+            if(!txtItemName.getText().isEmpty()||cmbCategories.getSelectedItem().toString() != "All"){
+                _mycondition += " AND";
+            }
+        }
+        if(!txtItemName.getText().isEmpty()){
+            _mycondition += " item_Name = '"+txtItemName.getText()+"'";
+            if(cmbCategories.getSelectedItem().toString() != "All"){
+                _mycondition += " AND";
+            }
+        }
+        if(cmbCategories.getSelectedItem().toString() != "All"){
+            int _catg_id = salerFunc.getIdByName("Categories", "category_Name", cmbCategories.getSelectedItem().toString());
+            _mycondition += " category_Id = "+_catg_id;
+            JOptionPane.showMessageDialog(null, _catg_id+";"+_mycondition);
+        }
+        salerFunc.searchItem(jTable_Items, _mycondition);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         salerFunc.addItemToBill(jTable_Items, jTable_Bill);
-        lbTotalPrice.setText(String.valueOf(salerFunc.totalPrice(jTable_Bill)));
+        txtTotalPrice.setText("$"+String.valueOf(salerFunc.totalPrice(jTable_Bill,4)));
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        Date thistime = new Date(System.currentTimeMillis());
+        int billid = Integer.parseInt(txtBill_Id.getText());
+        int userid = View.JIFrameUserLogin.getUserLog().getUserid();
+        int custid = salerFunc.getIdByName("Customers", "cust_Name", cmbCust.getSelectedItem().toString());
+        Date billdate = Date.valueOf(exFunc.getToday("yyyy-MM-dd"));
+        String billtype = "export";
+        salerFunc.submitBill(userid,custid,billdate, billtype);
+        salerFunc.submitBillDetail(jTable_Bill, billid);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int _confirm = JOptionPane.showConfirmDialog(null, "Are you sure delete items from the bill?");
+        if(_confirm == JOptionPane.YES_OPTION){
+            salerFunc.delRowInTable(jTable_Bill);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        String _mycondition = "";
+        if(txtCust_Id.getText().isEmpty()
+            && txtCust_Name.getText().isEmpty()
+            && txtCust_Tel.getText().isEmpty()
+            && txtCust_Adress.getText().isEmpty()
+            && cmbCust_Gender.getSelectedItem().toString() == "All"){
+            _mycondition = "";
+        }else{
+             _mycondition = " WHERE";
+        }
+        if(!txtCust_Id.getText().isEmpty()){
+            _mycondition += " cust_Id = "+txtCust_Id.getText();
+            if(!txtCust_Name.getText().isEmpty()
+                    || !txtCust_Tel.getText().isEmpty()
+                    || !txtCust_Adress.getText().isEmpty()
+                    || cmbCust_Gender.getSelectedItem().toString() != "All"){
+                _mycondition += " AND";
+            }
+        }
+        if(!txtCust_Name.getText().isEmpty()){
+            _mycondition += " cust_Name = '"+txtCust_Name.getText()+"'";
+            if(!txtCust_Tel.getText().isEmpty()
+                    || !txtCust_Adress.getText().isEmpty()
+                    || cmbCust_Gender.getSelectedItem().toString() != "All"){
+                _mycondition += " AND";
+            }
+        }
+        if(!txtCust_Tel.getText().isEmpty()){
+            _mycondition += " cust_Tel = '"+txtCust_Tel.getText()+"'";
+            if(!txtCust_Adress.getText().isEmpty()
+                    || cmbCust_Gender.getSelectedItem().toString() != "All"){
+                _mycondition += " AND";
+            }
+        }
+        if(!txtCust_Adress.getText().isEmpty()){
+            _mycondition += " cust_Adress = '"+txtCust_Adress.getText()+"'";
+            if(cmbCust_Gender.getSelectedItem().toString() != "All"){
+                _mycondition += " AND";
+            }
+        }
+        if(cmbCust_Gender.getSelectedItem().toString() != "All"){
+            _mycondition += " cust_Gender = '"+cmbCust_Gender.getSelectedItem().toString()+"'";
+        }
+        salerFunc.searchCust(jTable_Cust, _mycondition);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jTable_CustMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_CustMouseClicked
+        // TODO add your handling code here:
+        salerFunc.getTableToTextField(jTable_Cust, 0, txtCust_Id);
+        salerFunc.getTableToTextField(jTable_Cust, 1, txtCust_Name);
+        salerFunc.getTableToCombobox(jTable_Cust, 2, cmbCust_Gender);
+        salerFunc.getTableToTextField(jTable_Cust, 3, txtCust_Tel);
+        salerFunc.getTableToTextField(jTable_Cust, 4, txtCust_Adress);
+    }//GEN-LAST:event_jTable_CustMouseClicked
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        int custid = Integer.parseInt(txtCust_Id.getText());
+        String custname = txtCust_Name.getText();
+        String custgender = cmbCust_Gender.getSelectedItem().toString();
+        String custtel = txtCust_Tel.getText();
+        String custadress = txtCust_Adress.getText();
+        salerFunc.editCust(custid, custname, custgender, custtel, custadress);
+        salerFunc.viewCust(jTable_Cust);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        txtCust_Id.setText("");
+        txtCust_Name.setText("");
+        txtCust_Tel.setText("");
+        txtCust_Adress.setText("");
+        cmbCust_Gender.setSelectedItem("All");
+        salerFunc.viewCust(jTable_Cust);
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        Date datefrom = Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(jDateFrom.getDate()));
+        Date dateto = Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(jDateTo.getDate()));
+        String _mycondition = "";
+        if(txtBillId_Bills.getText().isEmpty()
+            && txtSalerId_Bills.getText().isEmpty()
+            && txtCustId_Bills.getText().isEmpty()
+            && datefrom == Date.valueOf(exFunc.getToday("yyyy-MM-dd"))
+            && dateto == Date.valueOf(exFunc.getToday("yyyy-MM-dd"))){
+            _mycondition = "";
+        }else{
+             _mycondition = " WHERE";
+        }
+        
+        if(!txtBillId_Bills.getText().isEmpty()){
+            _mycondition += " bill_Id = "+txtBillId_Bills.getText();
+            if(!txtSalerId_Bills.getText().isEmpty()
+                    || !txtCustId_Bills.getText().isEmpty()
+                    || datefrom != Date.valueOf(exFunc.getToday("yyyy-MM-dd"))
+                    || dateto != Date.valueOf(exFunc.getToday("yyyy-MM-dd"))){
+                _mycondition += " AND";
+            }
+        }
+        if(!txtSalerId_Bills.getText().isEmpty()){
+            _mycondition += " user_Id = "+txtSalerId_Bills.getText();
+            if(!txtCustId_Bills.getText().isEmpty()
+                    || datefrom != Date.valueOf(exFunc.getToday("yyyy-MM-dd"))
+                    || dateto != Date.valueOf(exFunc.getToday("yyyy-MM-dd"))){
+                _mycondition += " AND";
+            }
+        }
+        if(!txtCustId_Bills.getText().isEmpty()){
+            _mycondition += " cust_Id = "+txtCustId_Bills.getText();
+            if(datefrom != Date.valueOf(exFunc.getToday("yyyy-MM-dd"))
+                    || dateto != Date.valueOf(exFunc.getToday("yyyy-MM-dd"))){
+                _mycondition += " AND";
+            }
+        }
+        if(datefrom != Date.valueOf(exFunc.getToday("yyyy-MM-dd"))
+                || dateto != Date.valueOf(exFunc.getToday("yyyy-MM-dd"))){
+            JOptionPane.showMessageDialog(null, datefrom);
+            _mycondition += " bill_Date BETWEEN '"+datefrom+"' AND '"+dateto+"'";
+        }
+        salerFunc.searchBillList(jTable_BillList, _mycondition);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        jDialogViewItemsBills.setVisible(true);
+        jDialogViewItemsBills.setBounds(0, 0, getMaxWidth()/2,getMaxHeight()/2);
+        salerFunc.viewItemsByBillId(jTableViewItemsBills, Integer.parseInt(txtBillId_Bills.getText()));
+        txtTotalPrice_ViewItemBills.setText("$"+String.valueOf(salerFunc.totalPrice(jTableViewItemsBills, 4)));
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jScrollPane3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane3MouseClicked
+
+    private void jTable_BillListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_BillListMouseClicked
+        // TODO add your handling code here:
+        salerFunc.getTableToTextField(jTable_BillList, 0, txtBillId_Bills);
+        txtSalerId_Bills.setText(String.valueOf(salerFunc.getIdByName("Users", "user_Name", salerFunc.getTabledata(jTable_BillList, 1))));
+        txtCustId_Bills.setText(String.valueOf(salerFunc.getIdByName("Customers", "cust_Name", salerFunc.getTabledata(jTable_BillList, 2))));
+    }//GEN-LAST:event_jTable_BillListMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbCategories;
+    private javax.swing.JComboBox<String> cmbCust;
+    private javax.swing.JComboBox<String> cmbCust_Gender;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -560,18 +888,15 @@ public class JISalerManage extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private com.toedter.calendar.JDateChooser jDateFrom;
+    private com.toedter.calendar.JDateChooser jDateTo;
+    private javax.swing.JDialog jDialogViewItemsBills;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -584,7 +909,7 @@ public class JISalerManage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -595,18 +920,26 @@ public class JISalerManage extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTableViewItemsBills;
     private javax.swing.JTable jTable_Bill;
+    private javax.swing.JTable jTable_BillList;
+    private javax.swing.JTable jTable_Cust;
     private javax.swing.JTable jTable_Items;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JLabel lbTotalPrice;
-    private javax.swing.JTextField txtItemId_Name;
+    private javax.swing.JTextField txtBillId_Bills;
+    private javax.swing.JTextField txtBill_Id;
+    private javax.swing.JTextField txtCustId_Bills;
+    private javax.swing.JTextArea txtCust_Adress;
+    private javax.swing.JTextField txtCust_Id;
+    private javax.swing.JTextField txtCust_Name;
+    private javax.swing.JTextField txtCust_Tel;
+    private javax.swing.JTextField txtItemId;
+    private javax.swing.JTextField txtItemName;
+    private javax.swing.JTextField txtSalerId_Bills;
+    private javax.swing.JLabel txtToday;
+    private javax.swing.JLabel txtTotalPrice;
+    private javax.swing.JLabel txtTotalPrice_ViewItemBills;
+    private javax.swing.JLabel txtUsername;
     // End of variables declaration//GEN-END:variables
 }

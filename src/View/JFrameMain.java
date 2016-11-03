@@ -19,7 +19,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
- * @author Administrator
+ * @author Administrator2
  */
 public class JFrameMain extends javax.swing.JFrame {
 
@@ -28,6 +28,7 @@ public class JFrameMain extends javax.swing.JFrame {
      */
     public JFrameMain() {
         initComponents();
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //thiet lap frame main
         this.setResizable(false);
         this.setSize(getMaxWidth(), getMaxHeight());

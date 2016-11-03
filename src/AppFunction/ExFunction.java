@@ -5,23 +5,21 @@
  */
 package AppFunction;
 
-import View.JFrameMain;
-import View.JIFrameUserLogin;
 import View.JISalerManage;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseMotionListener;
-import java.beans.PropertyVetoException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -33,7 +31,20 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class ExFunction {
     private Connection conn = Connect.DataConnection.getConnection();
     
-    public static String encryptMD5(String input) {
+    public static String formatDay(String daytype, Date setday){
+        SimpleDateFormat formattime = new SimpleDateFormat(daytype);
+        String formattedday = formattime.format(setday);
+        return formattedday;
+    }
+    
+    public static String getToday(String daytype){
+        SimpleDateFormat formattime = new SimpleDateFormat(daytype);
+        Date thistime = new Date(System.currentTimeMillis());
+        String today = formattime.format(thistime.getTime());
+        return today;
+    }
+    
+    public String encryptMD5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] messageDigest = md.digest(input.getBytes());
@@ -48,6 +59,20 @@ public class ExFunction {
         }
     }
     
+    public boolean checkSyb(String s){
+        boolean check = false;
+        char syb[] = {'-','!','@','#','$','%','^','&','*','(',')','='};
+        char a[] = s.toCharArray();
+        for(int i=0; i<a.length; i++){
+            for(int j=0; j<syb.length; j++){
+                if(a[i]==syb[j]){
+                    check = true;
+                }
+            }
+        }
+        return check;
+    }
+            
     public boolean userLogin(String username, String password){
         boolean login = false;
         String sql = "SELECT * FROM Users WHERE user_Name = ? AND user_Pass = ?";
@@ -60,7 +85,7 @@ public class ExFunction {
                 JOptionPane.showMessageDialog(null, "Login Success!");
                 login = true;
             } else {
-                JOptionPane.showMessageDialog(null, "Login Error!");
+                JOptionPane.showMessageDialog(null, "Login Error, username or password wrong!");
                 login = false;
             }
             

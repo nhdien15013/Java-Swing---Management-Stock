@@ -6,12 +6,15 @@
 package View;
 
 import AppFunction.ExFunction;
+import AppFunction.SalerFunction;
+import AppFunction.UserLog;
 import java.awt.Component;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -21,6 +24,17 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  */
 public class JIFrameUserLogin extends javax.swing.JInternalFrame {
     public AppFunction.ExFunction exFunc = new ExFunction();
+    public AppFunction.SalerFunction salerFunc = new SalerFunction();
+    private static UserLog userLog;
+
+    public static UserLog getUserLog() {
+        return userLog;
+    }
+
+    public static void setUserLog(UserLog userLog) {
+        JIFrameUserLogin.userLog = userLog;
+    }
+    
     /**
      * Creates new form JIFrameUserLogin
      */
@@ -132,15 +146,21 @@ public class JIFrameUserLogin extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-            if(exFunc.userLogin(txtUsername.getText(),exFunc.encryptMD5(String.valueOf(txtPassword.getPassword())))){
+        String uname = txtUsername.getText();
+        String upass = String.valueOf(txtPassword.getPassword());
+        if (uname.isEmpty()||upass.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Please enter both of username and password!");
+        } else if(exFunc.checkSyb(uname)||exFunc.checkSyb(upass)){
+            JOptionPane.showMessageDialog(null, "Username and password can not have symbol!");
+        } else if(exFunc.userLogin(uname,exFunc.encryptMD5(upass))){
                 try {
+                    userLog = new UserLog(salerFunc.getIdByName("Users", "user_Name", uname),uname);
                     this.setClosed(true);
                 } catch (PropertyVetoException ex) {
                     Logger.getLogger(JIFrameUserLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                    this.getParent().add(exFunc.userRole(txtUsername.getText(),exFunc.encryptMD5(txtPassword.getText())));
+                    this.getParent().add(exFunc.userRole(uname,exFunc.encryptMD5(upass)));
             }
-        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
